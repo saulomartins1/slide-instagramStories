@@ -11,6 +11,9 @@ export default class Slide {
 
     timeout: Timeout | null;
 
+    paused: boolean;
+    pausedTimeout: Timeout | null;
+
     constructor(container: Element, slides: Element[], controls: Element, time: number = 5000) {
         this.container = container;
         this.slides = slides;
@@ -21,6 +24,9 @@ export default class Slide {
         this.slide = slides[this.index];
 
         this.timeout = null;
+
+        this.paused = false;
+        this.pausedTimeout = null;
 
         this.init()
     }
@@ -47,11 +53,26 @@ export default class Slide {
         this.timeout = new Timeout(() => this.next(), time);
     }
 
+    pause() {
+        this.pausedTimeout = new Timeout(() => {
+            this.paused = true;
+        }, 300);
+    }
+    continue() {
+        this.pausedTimeout?.clear();
+        if (this.paused) {
+            this.paused = false;
+            this.auto(this.time);
+        }
+    }
+
     prev() {
+        if (this.paused) return;
         const prev = (this.index > 0) ? this.index - 1 : this.slides.length - 1;
         this.show(prev);
     }
     next() {
+        if (this.paused) return;
         const next = (this.index + 1) < this.slides.length ? this.index + 1 : 0;
         this.show(next);
     }
@@ -61,10 +82,14 @@ export default class Slide {
         const nextButton = document.createElement("button");
         prevButton.innerText = "Slide Anterior"; //accessibility
         nextButton.innerText = "Próximo Slide"; //accessibility
-        prevButton.addEventListener("pointerup", () => this.prev());
-        nextButton.addEventListener("pointerup", () => this.next());
         this.controls.appendChild(prevButton);
         this.controls.appendChild(nextButton);
+
+        prevButton.addEventListener("pointerup", () => this.prev());
+        nextButton.addEventListener("pointerup", () => this.next());
+
+        this.controls.addEventListener("pointerdown", () => this.pause());
+        this.controls.addEventListener("pointerup", () => this.continue());
     }
 
     private init() {
