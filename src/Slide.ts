@@ -33,6 +33,10 @@ export default class Slide {
 
     hide(element: Element) {
         element.classList.remove("active");
+        if (element instanceof HTMLVideoElement) {
+            element.currentTime = 0;
+            element.pause();
+        }
     }
 
     show(index: number) {
@@ -43,9 +47,28 @@ export default class Slide {
             if (element.classList.contains("active")) {
                 this.hide(element);
             };
-            this.slide.classList.add("active");
         })
-        this.auto(this.time);
+        this.slide.classList.add("active");
+
+        if (this.slide instanceof HTMLVideoElement) {
+            this.autoVideo(this.slide);
+        } else[
+            this.auto(this.time)
+        ]
+    }
+
+    autoVideo(video: HTMLVideoElement) {
+        video.muted = true;
+        video.play();
+
+        let firstPlay = true;
+        if (firstPlay) {
+            video.addEventListener("playing", () => {
+                this.auto(video.duration * 1000);
+            })
+            firstPlay = false;
+        }
+
     }
 
     auto(time: number) {
@@ -57,6 +80,7 @@ export default class Slide {
         this.pausedTimeout = new Timeout(() => {
             this.paused = true;
             this.timeout?.pause();
+            if (this.slide instanceof HTMLVideoElement) this.slide.pause();
         }, 300);
     }
     continue() {
@@ -64,6 +88,7 @@ export default class Slide {
         if (this.paused) {
             this.paused = false;
             this.timeout?.continue();
+            if (this.slide instanceof HTMLVideoElement) this.slide.play();
         }
     }
 
