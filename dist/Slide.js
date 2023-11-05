@@ -12,7 +12,7 @@ export default class Slide {
         this.time = time;
         this.index = 0;
         this.slide = slides[this.index];
-        this.show(this.index);
+        this.init();
     }
     hide(element) {
         element.classList.remove("active");
@@ -27,5 +27,23 @@ export default class Slide {
             ;
             this.slide.classList.add("active");
         });
+    }
+    prev() {
+        this.show(this.index - 1);
+    }
+    next() {
+        this.show(this.index + 1);
+    }
+    addControls() {
+        const prevButton = document.createElement("button");
+        const nextButton = document.createElement("button");
+        prevButton.addEventListener("pointerup", () => this.prev());
+        nextButton.addEventListener("pointerup", () => this.next());
+        this.controls.appendChild(prevButton);
+        this.controls.appendChild(nextButton);
+    }
+    init() {
+        this.addControls();
+        this.show(this.index);
     }
 }
