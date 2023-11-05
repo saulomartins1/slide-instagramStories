@@ -20,7 +20,7 @@ export default class Slide {
         this.controls = controls;
         this.time = time;
 
-        this.index = 0;
+        this.index = localStorage.getItem("currentSlide") ? Number(localStorage.getItem("currentSlide")) : 0;
         this.slide = slides[this.index];
 
         this.timeout = null;
@@ -55,6 +55,8 @@ export default class Slide {
         } else[
             this.auto(this.time)
         ]
+
+        localStorage.setItem("currentSlide", String(this.index));
     }
 
     autoVideo(video: HTMLVideoElement) {
