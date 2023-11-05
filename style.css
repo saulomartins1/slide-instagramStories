@@ -39,6 +39,7 @@ h1 {
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-area: 1/1;
+    position: relative;
 }
 
 #slide-controls button {
@@ -47,4 +48,40 @@ h1 {
     appearance: none;
     /* when tap on screen you get a highlight feedback in mobile devices */
     -webkit-tap-highlight-color: transparent;
+}
+
+
+/* thumbs time indicator */
+#slide-thumb {
+    display: flex;
+    position: absolute;
+    width: 100%;
+}
+
+#slide-thumb>span {
+    flex: 1;
+    display: block;
+    height: 4px;
+    background: blue;
+    /* background: rgba(255, 255, 255, .3); */
+    margin: 6px;
+    border-radius: 3px;
+    pointer-events: none;
+    overflow: hidden;
+    isolation: isolate;
+}
+
+#slide-thumb .thumb-item {
+    display: block;
+    height: inherit;
+    background: rgba(255, 255, 255, .9);
+    border-radius: 3px;
+    transform: translateX(-100%);
+    animation: thumb 3s forwards linear running;
+}
+
+@keyframes thumb {
+    to {
+        transform: initial;
+    }
 }
