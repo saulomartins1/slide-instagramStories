@@ -14,6 +14,8 @@ export default class Slide {
     paused: boolean;
     pausedTimeout: Timeout | null;
 
+    thumbItems: HTMLElement[] | null;
+    thumb: HTMLElement | null
     constructor(container: Element, slides: Element[], controls: Element, time: number = 5000) {
         this.container = container;
         this.slides = slides;
@@ -27,6 +29,9 @@ export default class Slide {
 
         this.paused = false;
         this.pausedTimeout = null;
+
+        this.thumbItems = null;
+        this.thumb = null;
 
         this.init()
     }
@@ -57,6 +62,12 @@ export default class Slide {
         ]
 
         localStorage.setItem("currentSlide", String(this.index));
+
+        if (this.thumbItems) {
+            this.thumb = this.thumbItems[this.index];
+            this.thumbItems.forEach((element) => element.classList.remove("active"));
+            this.thumb.classList.add("active");
+        }
     }
 
     autoVideo(video: HTMLVideoElement) {
@@ -76,6 +87,9 @@ export default class Slide {
     auto(time: number) {
         this.timeout?.clear();
         this.timeout = new Timeout(() => this.next(), time);
+        if (this.thumb) {
+            this.thumb.style.animationDuration = `${time}ms`;
+        }
     }
 
     pause() {
@@ -83,7 +97,8 @@ export default class Slide {
             this.paused = true;
             this.timeout?.pause();
             if (this.slide instanceof HTMLVideoElement) this.slide.pause();
-        }, 300);
+            this.thumb?.classList.add("paused");
+        }, 150);
     }
     continue() {
         this.pausedTimeout?.clear();
@@ -91,6 +106,7 @@ export default class Slide {
             this.paused = false;
             this.timeout?.continue();
             if (this.slide instanceof HTMLVideoElement) this.slide.play();
+            this.thumb?.classList.remove("paused");
         }
     }
 
@@ -133,6 +149,7 @@ export default class Slide {
             `
         }
         this.controls.appendChild(thumbContainer);
+        this.thumbItems = Array.from(document.querySelectorAll(".thumb-item"));
     }
 
     private init() {

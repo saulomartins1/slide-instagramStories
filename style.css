@@ -62,8 +62,7 @@ h1 {
     flex: 1;
     display: block;
     height: 4px;
-    background: blue;
-    /* background: rgba(255, 255, 255, .3); */
+    background: rgba(255, 255, 255, .3);
     margin: 6px;
     border-radius: 3px;
     pointer-events: none;
@@ -71,13 +70,18 @@ h1 {
     isolation: isolate;
 }
 
-#slide-thumb .thumb-item {
+#slide-thumb .thumb-item.active {
     display: block;
     height: inherit;
     background: rgba(255, 255, 255, .9);
     border-radius: 3px;
     transform: translateX(-100%);
-    animation: thumb 3s forwards linear running;
+    animation: thumb forwards linear running;
+}
+
+
+#slide-thumb .thumb-item.paused {
+    animation-play-state: paused;
 }
 
 @keyframes thumb {

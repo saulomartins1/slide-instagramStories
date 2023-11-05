@@ -9,6 +9,8 @@ export default class Slide {
     timeout;
     paused;
     pausedTimeout;
+    thumbItems;
+    thumb;
     constructor(container, slides, controls, time = 5000) {
         this.container = container;
         this.slides = slides;
@@ -19,6 +21,8 @@ export default class Slide {
         this.timeout = null;
         this.paused = false;
         this.pausedTimeout = null;
+        this.thumbItems = null;
+        this.thumb = null;
         this.init();
     }
     hide(element) {
@@ -46,6 +50,11 @@ export default class Slide {
                 this.auto(this.time)
             ];
         localStorage.setItem("currentSlide", String(this.index));
+        if (this.thumbItems) {
+            this.thumb = this.thumbItems[this.index];
+            this.thumbItems.forEach((element) => element.classList.remove("active"));
+            this.thumb.classList.add("active");
+        }
     }
     autoVideo(video) {
         video.muted = true;
@@ -61,6 +70,9 @@ export default class Slide {
     auto(time) {
         this.timeout?.clear();
         this.timeout = new Timeout(() => this.next(), time);
+        if (this.thumb) {
+            this.thumb.style.animationDuration = `${time}ms`;
+        }
     }
     pause() {
         this.pausedTimeout = new Timeout(() => {
@@ -68,7 +80,8 @@ export default class Slide {
             this.timeout?.pause();
             if (this.slide instanceof HTMLVideoElement)
                 this.slide.pause();
-        }, 300);
+            this.thumb?.classList.add("paused");
+        }, 150);
     }
     continue() {
         this.pausedTimeout?.clear();
@@ -77,6 +90,7 @@ export default class Slide {
             this.timeout?.continue();
             if (this.slide instanceof HTMLVideoElement)
                 this.slide.play();
+            this.thumb?.classList.remove("paused");
         }
     }
     prev() {
@@ -116,6 +130,7 @@ export default class Slide {
             `;
         }
         this.controls.appendChild(thumbContainer);
+        this.thumbItems = Array.from(document.querySelectorAll(".thumb-item"));
     }
     init() {
         this.addControls();
