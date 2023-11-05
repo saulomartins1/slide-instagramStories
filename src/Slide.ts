@@ -35,10 +35,12 @@ export default class Slide {
     }
 
     prev() {
-        this.show(this.index - 1);
+        const prev = (this.index > 0) ? this.index - 1 : this.slides.length - 1;
+        this.show(prev);
     }
     next() {
-        this.show(this.index + 1);
+        const next = (this.index + 1) < this.slides.length ? this.index + 1 : 0;
+        this.show(next);
     }
 
     private addControls() {
