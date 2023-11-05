@@ -56,13 +56,14 @@ export default class Slide {
     pause() {
         this.pausedTimeout = new Timeout(() => {
             this.paused = true;
+            this.timeout?.pause();
         }, 300);
     }
     continue() {
         this.pausedTimeout?.clear();
         if (this.paused) {
             this.paused = false;
-            this.auto(this.time);
+            this.timeout?.continue();
         }
     }
 
