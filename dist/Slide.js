@@ -37,6 +37,8 @@ export default class Slide {
     addControls() {
         const prevButton = document.createElement("button");
         const nextButton = document.createElement("button");
+        prevButton.innerText = "Slide Anterior"; //accessibility
+        nextButton.innerText = "Próximo Slide"; //accessibility
         prevButton.addEventListener("pointerup", () => this.prev());
         nextButton.addEventListener("pointerup", () => this.next());
         this.controls.appendChild(prevButton);
