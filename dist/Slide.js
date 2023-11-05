@@ -103,8 +103,23 @@ export default class Slide {
         this.controls.addEventListener("pointerdown", () => this.pause());
         this.controls.addEventListener("pointerup", () => this.continue());
     }
+    addThumbItems() {
+        const thumbContainer = document.createElement("div");
+        thumbContainer.id = "slide-thumb";
+        console.log(this.slides.length);
+        for (let i = 0; i < this.slides.length; i++) {
+            thumbContainer.innerHTML += `
+                <span>
+                    <span class="thumb-item">
+                    </span>
+                </span>
+            `;
+        }
+        this.controls.appendChild(thumbContainer);
+    }
     init() {
         this.addControls();
+        this.addThumbItems();
         this.show(this.index);
     }
 }
