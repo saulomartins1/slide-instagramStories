@@ -67,6 +67,7 @@ a {
     grid-area: 1/1;
     position: relative;
     background-color: #3333;
+    box-shadow: -1px 200px 91px -200px rgba(0, 0, 0, .9) inset;
 }
 
 #slide-controls button {
@@ -83,13 +84,13 @@ a {
     display: flex;
     position: absolute;
     width: 100%;
-    margin-top: 10px;
+    margin-top: 12px;
 }
 
 #slide-thumb>span {
     flex: 1;
     display: block;
-    height: 4px;
+    height: 2px;
     background: rgba(255, 255, 255, .3);
     margin: 6px;
     border-radius: 3px;
@@ -126,14 +127,34 @@ a {
     grid-area: 1/1;
     z-index: 999;
     pointer-events: none;
+    position: relative;
 }
 
-#slide-profile div {
+#slide-profile .story-header-profile {
+    margin: 32px auto;
     display: flex;
-    text-align: center;
+    justify-content: space-between;
+    width: 100%;
+    position: absolute;
+    box-sizing: border-box;
+    padding: 0 26px 0 6px;
+}
+
+#slide-profile .story-header-profile .story-header-profile-infos,
+#slide-profile .story-header-profile .story-header-profile-buttons {
+    display: flex;
     align-items: center;
-    margin: 32px 6px;
     gap: 9px;
+}
+
+#slide-profile .story-header-profile .story-header-profile-buttons {
+    gap: 22px;
+}
+
+#slide-profile .story-header-profile .story-header-profile-buttons>i {
+    font-size: 24px;
+    cursor: pointer;
+    pointer-events: all;
 }
 
 #slide-profile div span {
