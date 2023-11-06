@@ -155,7 +155,7 @@ input {
     gap: 22px;
 }
 
-#slide-profile .story-header-profile .story-header-profile-buttons>i {
+#slide-profile .story-header-profile .story-header-profile-buttons div>i {
     font-size: 24px;
     cursor: pointer;
     pointer-events: all;
