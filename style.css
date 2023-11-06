@@ -1,6 +1,7 @@
 body {
     font-family: sans-serif;
     margin: 20px;
+    background-color: #000;
 }
 
 body.paused {
@@ -30,8 +31,9 @@ h1 {
     border-radius: 6px;
     overflow: hidden;
     margin: 19px auto;
-    max-width: 800px;
-    background-color: #FFF;
+    max-height: 843px;
+    max-width: 474px;
+    background-color: #111;
 }
 
 #slide-elements {
@@ -43,11 +45,13 @@ h1 {
     grid-area: 1/1;
     opacity: 0;
     visibility: none;
+    object-fit: contain;
 }
 
 #slide-elements>.active {
     opacity: 1;
     visibility: visible;
+    height: 100%;
 }
 
 /* control buttons over #slide-elements  */
@@ -56,6 +60,7 @@ h1 {
     grid-template-columns: 1fr 1fr;
     grid-area: 1/1;
     position: relative;
+    background-color: #3333;
 }
 
 #slide-controls button {
@@ -72,6 +77,7 @@ h1 {
     display: flex;
     position: absolute;
     width: 100%;
+    margin-top: 10px;
 }
 
 #slide-thumb>span {
