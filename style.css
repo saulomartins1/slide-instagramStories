@@ -2,6 +2,7 @@ body {
     font-family: sans-serif;
     margin: 20px;
     background-color: #000;
+    color: #FFF;
 }
 
 body.paused {
@@ -24,6 +25,11 @@ img {
 h1 {
     font-size: 1.6rem;
     text-align: center;
+}
+
+a {
+    text-decoration: none;
+    color: #FFF;
 }
 
 #slide {
@@ -110,4 +116,39 @@ h1 {
     to {
         transform: initial;
     }
+}
+
+/* Profile image/name */
+#slide-profile {
+    display: grid;
+    justify-content: start;
+    align-items: start;
+    grid-area: 1/1;
+    z-index: 999;
+    pointer-events: none;
+}
+
+#slide-profile div {
+    display: flex;
+    text-align: center;
+    align-items: center;
+    margin: 32px 6px;
+    gap: 9px;
+}
+
+#slide-profile div span {
+    color: #FFF9;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+#slide-profile div img {
+    max-width: 32px;
+    max-height: 32px;
+    border-radius: 50%;
+
+}
+
+#slide-profile a {
+    pointer-events: all;
 }
