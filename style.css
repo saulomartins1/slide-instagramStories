@@ -32,6 +32,10 @@ a {
     color: #FFF;
 }
 
+input {
+    outline: 0;
+}
+
 #slide {
     display: grid;
     border-radius: 6px;
@@ -67,7 +71,7 @@ a {
     grid-area: 1/1;
     position: relative;
     background-color: #3333;
-    box-shadow: -1px 200px 91px -200px rgba(0, 0, 0, .9) inset;
+    box-shadow: -1px 200px 91px -200px rgba(0, 0, 0, .9) inset, -1px -200px 91px -200px rgba(0, 0, 0, .9) inset;
 }
 
 #slide-controls button {
@@ -119,7 +123,7 @@ a {
     }
 }
 
-/* Profile image/name */
+/* STORY HEADER - PROFILE INFOS */
 #slide-profile {
     display: grid;
     justify-content: start;
@@ -172,4 +176,43 @@ a {
 
 #slide-profile a {
     pointer-events: all;
+}
+
+/*  STORY FOOTER */
+#slide-profile .story-footer {
+    margin: 16px auto;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    position: absolute;
+    box-sizing: border-box;
+    padding: 0 26px 0 6px;
+    bottom: 0;
+    align-items: center;
+    gap: 16px;
+    pointer-events: all;
+}
+
+#slide-profile .story-footer input {
+    padding: 20px 32px;
+    color: #FFF9;
+    border: 1px solid currentColor;
+    border-radius: 32px;
+    background-color: transparent;
+    width: 100%;
+    font-size: 16px;
+}
+
+#slide-profile .story-footer input::placeholder {
+    color: currentColor;
+}
+
+#slide-profile .story-footer .story-footer-buttons {
+    display: flex;
+    gap: 16px;
+}
+
+#slide-profile .story-footer .story-footer-buttons>i {
+    font-size: 32px;
+    cursor: pointer;
 }
