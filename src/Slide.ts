@@ -137,8 +137,8 @@ export default class Slide {
         nextButton.addEventListener("pointerup", () => this.next());
 
         this.controls.addEventListener("pointerdown", () => this.pause());
-        document.addEventListener("pointerup", () => this.continue());
-        document.addEventListener("touchend", () => this.continue());
+        // document.addEventListener("pointerup", () => this.continue());
+        // document.addEventListener("touchend", () => this.continue());
     }
 
     private addThumbItems() {
