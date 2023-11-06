@@ -16,6 +16,8 @@ export default class Slide {
 
     thumbItems: HTMLElement[] | null;
     thumb: HTMLElement | null
+
+    videoSound: boolean;
     constructor(container: Element, slides: Element[], controls: Element, time: number = 5000) {
         this.container = container;
         this.slides = slides;
@@ -33,11 +35,14 @@ export default class Slide {
         this.thumbItems = null;
         this.thumb = null;
 
+        this.videoSound = false;
+
         this.init()
     }
 
     hide(element: Element) {
         element.classList.remove("active");
+
         if (element instanceof HTMLVideoElement) {
             element.currentTime = 0;
             element.pause();
@@ -57,9 +62,10 @@ export default class Slide {
 
         if (this.slide instanceof HTMLVideoElement) {
             this.autoVideo(this.slide);
-        } else[
+        } else {
             this.auto(this.time)
-        ]
+            this.sound();
+        }
 
         localStorage.setItem("currentSlide", String(this.index));
 
@@ -125,6 +131,24 @@ export default class Slide {
         this.show(next);
     }
 
+    sound() {
+        const sound_Icon = document.querySelector("#sound_icon > i");
+        if (this.slide instanceof HTMLVideoElement) {
+            if (!this.videoSound) {
+                this.slide.muted = false;
+                this.videoSound = true;
+                sound_Icon?.classList.replace("ph-speaker-simple-x", "ph-speaker-simple-high");
+            } else {
+                this.slide.muted = true;
+                this.videoSound = false;
+                sound_Icon?.classList.replace("ph-speaker-simple-high", "ph-speaker-simple-x");
+            }
+        } else {
+            this.videoSound = false;
+            sound_Icon?.classList.replace("ph-speaker-simple-high", "ph-speaker-simple-x");
+        }
+    }
+
     private addControls() {
         const prevButton = document.createElement("button");
         const nextButton = document.createElement("button");
@@ -137,8 +161,11 @@ export default class Slide {
         nextButton.addEventListener("pointerup", () => this.next());
 
         this.controls.addEventListener("pointerdown", () => this.pause());
-        // document.addEventListener("pointerup", () => this.continue());
-        // document.addEventListener("touchend", () => this.continue());
+        document.addEventListener("pointerup", () => this.continue());
+        document.addEventListener("touchend", () => this.continue());
+
+        const soundButton = document.querySelector("#sound_icon");
+        soundButton?.addEventListener("pointerdown", () => this.sound());
     }
 
     private addThumbItems() {
